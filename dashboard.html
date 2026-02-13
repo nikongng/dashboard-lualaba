@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -146,6 +147,43 @@
         .bulk-actions button:hover {
             background: #e0a800;
         }
+        .validation-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .validation-toolbar input {
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            min-width: 240px;
+        }
+        .validation-toolbar button {
+            padding: 8px 12px;
+            border: none;
+            background: #00cba9;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .validation-toolbar button.secondary {
+            background: #6c757d;
+        }
+        .validation-status {
+            font-size: 12px;
+            color: #6c757d;
+        }
+        body.dark .validation-toolbar input {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border: 1px solid #7f8c8d;
+        }
+        body.dark .validation-status {
+            color: #bdc3c7;
+        }
         .theme-toggle {
             padding: 8px 12px;
             border: none;
@@ -171,12 +209,16 @@
             background: #218838;
         }
         .tab {
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
             background: #343a40;
             display: flex;
+            gap: 6px;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
         }
         .tab button {
-            flex: 1;
+            flex: 0 0 auto;
             background: inherit;
             border: none;
             outline: none;
@@ -186,6 +228,14 @@
             color: #adb5bd;
             font-weight: 500;
             position: relative;
+            white-space: nowrap;
+        }
+        .tab::-webkit-scrollbar {
+            height: 6px;
+        }
+        .tab::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 999px;
         }
         .tab button:hover {
             background: rgba(255,255,255,0.1);
@@ -260,6 +310,38 @@
         }
         body.dark .user-card h4 {
             color: #ecf0f1 !important;
+        }
+        .price-pill {
+            margin-left: auto;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 122, 26, 0.35);
+            background: linear-gradient(135deg, rgba(255, 122, 26, 0.16), rgba(255, 122, 26, 0.06));
+            box-shadow: 0 10px 22px rgba(255, 122, 26, 0.18);
+            white-space: nowrap;
+        }
+        body.dark .price-pill {
+            background: linear-gradient(135deg, rgba(255, 122, 26, 0.22), rgba(255, 122, 26, 0.08));
+            box-shadow: 0 12px 26px rgba(0,0,0,0.28);
+        }
+        .price-amount {
+            color: #ff7a1a;
+            font-weight: 900;
+            font-size: 1.05em;
+            letter-spacing: -0.2px;
+            line-height: 1;
+        }
+        .price-suffix {
+            color: #6c757d;
+            font-weight: 700;
+            font-size: 0.82em;
+            line-height: 1;
+        }
+        body.dark .price-suffix {
+            color: #bdc3c7;
         }
         .badge {
             background: linear-gradient(45deg, #007bff, #0056b3);
@@ -366,6 +448,83 @@
             background: rgba(0,0,0,0.5);
             animation: fadeIn 0.3s ease;
         }
+        .modal.open {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal .modal-content {
+            transform: scale(0.96);
+            opacity: 1;
+            transition: transform 220ms cubic-bezier(.2,.8,.2,1), opacity 220ms ease;
+        }
+        .modal.open .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        /* Image zoom modal */
+        .image-zoom-modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            align-items: center;
+            justify-content: center;
+        }
+        .image-zoom-content {
+            max-width: 95%;
+            max-height: 95%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-zoom-content img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            transition: transform 0.25s ease, opacity 0.25s ease;
+            transform: scale(0.9);
+        }
+        .image-zoom-content img.open {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .image-zoom-close {
+            position: fixed;
+            top: 18px;
+            right: 22px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            z-index: 1110;
+        }
+        /* Iframe loader */
+        .iframe-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.7);
+            z-index: 1200;
+        }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 5px solid rgba(0,0,0,0.1);
+            border-top-color: #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .modal-content {
             background: white;
             margin: 5% auto;
@@ -428,6 +587,19 @@
             border-radius: 50%;
             margin-right: 15px;
             border: 2px solid #00cba9;
+        }
+        .cover-thumb {
+            width: 84px;
+            height: 84px;
+            border-radius: 14px;
+            margin-right: 14px;
+            object-fit: cover;
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+        }
+        body.dark .cover-thumb {
+            border: 1px solid rgba(255,255,255,0.10);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.40);
         }
         .toast {
             position: fixed;
@@ -540,6 +712,14 @@
             <button class="tablinks" data-tab="Classic">Classiques</button>
             <button class="tablinks" data-tab="Pro">Professionnels</button>
             <button class="tablinks" data-tab="Enterprise">Entreprises</button>
+            <button class="tablinks" data-tab="Validation">Validation ID</button>
+            <button class="tablinks" data-tab="Services">Services rapides</button>
+            <button class="tablinks" data-tab="Food">Repas</button>
+            <button class="tablinks" data-tab="Freelance">Freelance & Pros</button>
+            <button class="tablinks" data-tab="Cars">Mobilite</button>
+            <button class="tablinks" data-tab="Training">Formation</button>
+            <button class="tablinks" data-tab="Jobs">Emploi</button>
+            <button class="tablinks" data-tab="Ads">Annonces</button>
         </div>
 
         <div id="Classic" class="tabcontent">
@@ -558,6 +738,59 @@
             <h3>Utilisateurs Entreprises</h3>
             <div id="enterprise-users" class="user-grid"></div>
             <div class="pagination" id="enterprise-pagination"></div>
+        </div>
+
+        <div id="Validation" class="tabcontent">
+            <h3>Validation identitÃ©</h3>
+            <div class="validation-toolbar">
+                <input type="text" id="identitySearchInput" placeholder="UID, email ou tÃ©lÃ©phone">
+                <button id="identitySearchBtn">Rechercher</button>
+                <button id="identityRefreshBtn" class="secondary">Actualiser</button>
+                <span id="identityStatus" class="validation-status"></span>
+            </div>
+            <div id="identity-validation-list" class="user-grid"></div>
+        </div>
+
+        <div id="Services" class="tabcontent">
+            <h3>Prestataires - Services rapides</h3>
+            <div id="service-providers" class="user-grid"></div>
+            <div class="pagination" id="service-providers-pagination"></div>
+        </div>
+
+        <div id="Food" class="tabcontent">
+            <h3>Resto & Fast-Food</h3>
+            <div id="food-places" class="user-grid"></div>
+            <div class="pagination" id="food-places-pagination"></div>
+        </div>
+
+        <div id="Freelance" class="tabcontent">
+            <h3>Freelance & Pros</h3>
+            <div id="freelance-pros" class="user-grid"></div>
+            <div class="pagination" id="freelance-pros-pagination"></div>
+        </div>
+
+        <div id="Cars" class="tabcontent">
+            <h3>Mobilite - Location & Reservation</h3>
+            <div id="car-rentals" class="user-grid"></div>
+            <div class="pagination" id="car-rentals-pagination"></div>
+        </div>
+
+        <div id="Training" class="tabcontent">
+            <h3>Formation - Cours & Soutien</h3>
+            <div id="training-offers" class="user-grid"></div>
+            <div class="pagination" id="training-offers-pagination"></div>
+        </div>
+
+        <div id="Jobs" class="tabcontent">
+            <h3>Emploi - Offres</h3>
+            <div id="job-posts" class="user-grid"></div>
+            <div class="pagination" id="job-posts-pagination"></div>
+        </div>
+
+        <div id="Ads" class="tabcontent">
+            <h3>Petites annonces</h3>
+            <div id="classified-ads" class="user-grid"></div>
+            <div class="pagination" id="classified-ads-pagination"></div>
         </div>
 
         <div id="settingsModal" class="modal settings-modal">
@@ -617,7 +850,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, updateDoc, doc, deleteDoc, addDoc, serverTimestamp, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, updateDoc, doc, deleteDoc, addDoc, serverTimestamp, query, where, orderBy, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, getIdTokenResult, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
@@ -658,6 +891,9 @@
         let selectedUsers = new Set();
         let listeners = {};
         let certificationChart;
+        let identityUsers = [];
+        let identityFiltered = [];
+        let identityLoading = false;
 
         // Horloge temps réel
         setInterval(() => {
@@ -665,7 +901,9 @@
         }, 1000);
 
         // Collections list (kept for listener initialization)
-        const collections = ['classic_users', 'pro_users', 'enterprise_users'];
+        // NOTE: service providers are certified separately (not classic/pro/enterprise user badges).
+        const collections = ['classic_users', 'pro_users', 'enterprise_users', 'service_providers', 'food_places', 'freelance_pros', 'car_rentals', 'training_offers', 'job_posts', 'classified_ads'];
+        const identityCollections = ['classic_users', 'pro_users', 'enterprise_users', 'users'];
 
         // Initialize Firestore listeners only after successful auth and admin claim verified
         function initFirestoreListeners() {
@@ -752,13 +990,21 @@
                 document.getElementById('userLabel').textContent = user.displayName || user.email || '';
                 try {
                     const idTokenResult = await getIdTokenResult(user);
-                    const isAdmin = !!(idTokenResult && idTokenResult.claims && idTokenResult.claims.admin === true);
+                    let isAdmin = !!(idTokenResult && idTokenResult.claims && idTokenResult.claims.admin === true);
+                    if (!isAdmin) {
+                        try {
+                            const adminSnap = await getDoc(doc(db, 'admin_users', user.uid));
+                            isAdmin = adminSnap.exists() && ((adminSnap.data() || {}).enabled !== false);
+                        } catch (_) {}
+                    }
                     window.__isAdmin = isAdmin;
                     // Show request admin button when logged in but not admin
                     if (!isAdmin) {
                         document.getElementById('requestAdminBtn')?.style.setProperty('display', 'inline-block');
+                        document.getElementById('manageRequestsBtn')?.style.setProperty('display', 'none');
                     } else {
                         document.getElementById('requestAdminBtn')?.style.setProperty('display', 'none');
+                        document.getElementById('manageRequestsBtn')?.style.setProperty('display', 'inline-block');
                     }
                     if (!isAdmin) {
                         showToast('Accès refusé : compte non administrateur', true);
@@ -776,6 +1022,7 @@
                 document.getElementById('userLabel').textContent = '';
                 window.__isAdmin = false;
                 document.getElementById('requestAdminBtn')?.style.setProperty('display', 'none');
+                document.getElementById('manageRequestsBtn')?.style.setProperty('display', 'none');
             }
         });
 
@@ -938,8 +1185,26 @@
             certifyingUsers.add(userId);
             updateUserCardButton(collectionName, userId, true);
             try {
-                await updateDoc(doc(db, collectionName, userId), { isCertified: true });
-                showToast('Utilisateur certifié !');
+                const payload = (collectionName === 'service_providers' || collectionName === 'food_places' || collectionName === 'freelance_pros' || collectionName === 'car_rentals' || collectionName === 'training_offers' || collectionName === 'job_posts' || collectionName === 'classified_ads')
+                    ? { isCertified: true, certified: true, certifiedAt: serverTimestamp() }
+                    : { isCertified: true };
+                await updateDoc(doc(db, collectionName, userId), payload);
+                const msg = (collectionName === 'service_providers')
+                    ? 'Prestataire certifie !'
+                    : (collectionName === 'food_places')
+                        ? 'Etablissement certifie !'
+                        : (collectionName === 'freelance_pros')
+                            ? 'Profil certifie !'
+                            : (collectionName === 'car_rentals')
+                                ? 'Annonce certifiee !'
+                                : (collectionName === 'training_offers')
+                                    ? 'Formation certifiee !'
+                                    : (collectionName === 'job_posts')
+                                        ? 'Offre certifiee !'
+                                        : (collectionName === 'classified_ads')
+                                            ? 'Annonce certifiee !'
+                                            : 'Utilisateur certifié !';
+                showToast(msg);
                 updateStats();
             } catch (error) {
                 showToast('Erreur lors de la certification: ' + error.message, true);
@@ -952,7 +1217,10 @@
             certifyingUsers.add(userId);
             updateUserCardButton(collectionName, userId, true);
             try {
-                await updateDoc(doc(db, collectionName, userId), { isCertified: false });
+                const payload = (collectionName === 'service_providers' || collectionName === 'food_places' || collectionName === 'freelance_pros' || collectionName === 'car_rentals' || collectionName === 'training_offers' || collectionName === 'job_posts' || collectionName === 'classified_ads')
+                    ? { isCertified: false, certified: false, certifiedAt: null }
+                    : { isCertified: false };
+                await updateDoc(doc(db, collectionName, userId), payload);
                 showToast('Certification retirée !');
                 updateStats();
             } catch (error) {
@@ -974,10 +1242,11 @@
         };
 
         function updateUserCardButton(collectionName, userId, loading) {
-            const btns = document.querySelectorAll(`button[data-userid="${collectionName}_${userId}"]`);
+            // Buttons are rendered with data-collection + data-userid (not concatenated).
+            const btns = document.querySelectorAll(`button[data-collection="${collectionName}"][data-userid="${userId}"]`);
             btns.forEach(btn => {
                 btn.disabled = loading;
-                btn.textContent = loading ? 'Chargement...' : btn.getAttribute('data-original');
+                btn.textContent = loading ? 'Chargement...' : (btn.getAttribute('data-original') || btn.textContent);
             });
         }
 
@@ -1018,23 +1287,752 @@
             }
         }
 
+        function toMillis(value) {
+            if (!value) return null;
+            if (typeof value === 'number') return value;
+            if (typeof value === 'string') {
+                const d = Date.parse(value);
+                return isNaN(d) ? null : d;
+            }
+            if (value.seconds) return value.seconds * 1000;
+            if (typeof value.toDate === 'function') return value.toDate().getTime();
+            return null;
+        }
+
+        function collectionLabel(col) {
+            if (col === 'pro_users') return 'Pro';
+            if (col === 'enterprise_users') return 'Entreprise';
+            if (col === 'classic_users') return 'Classique';
+            return col || 'Utilisateur';
+        }
+
+        function profileTypeLabel(val) {
+            if (val === 1) return 'Pro';
+            if (val === 2) return 'Entreprise';
+            return 'Classique';
+        }
+
+        function escapeHtml(str) {
+            return String(str ?? '').replace(/[&<>"']/g, (m) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[m]));
+        }
+
+        async function loadIdentityPending() {
+            const container = document.getElementById('identity-validation-list');
+            const status = document.getElementById('identityStatus');
+            if (!container) return;
+            if (!window.__dashboardAuthReady) {
+                container.innerHTML = `<div class="no-users">Veuillez vous connecter pour voir les validations.</div>`;
+                return;
+            }
+            if (!window.__isAdmin) {
+                container.innerHTML = `<div class="no-users">AccÃ¨s refusÃ© : compte non administrateur.</div>`;
+                return;
+            }
+            identityLoading = true;
+            if (status) status.textContent = 'Chargement...';
+            container.innerHTML = '<div class="skeleton"></div>'.repeat(6);
+            const items = [];
+            for (const col of identityCollections) {
+                try {
+                    const q = query(collection(db, col), where('isValidated', '==', false));
+                    const snap = await getDocs(q);
+                    snap.forEach((docSnap) => {
+                        items.push({ id: docSnap.id, collection: col, data: docSnap.data() });
+                    });
+                } catch (e) {
+                    console.error('identity pending error', col, e);
+                }
+            }
+            items.sort((a, b) => (toMillis(b.data?.createdAt) || 0) - (toMillis(a.data?.createdAt) || 0));
+            identityUsers = items;
+            identityFiltered = items;
+            identityLoading = false;
+            if (status) status.textContent = `${items.length} en attente`;
+            renderIdentityList(identityFiltered);
+        }
+
+        function renderIdentityList(list) {
+            const container = document.getElementById('identity-validation-list');
+            if (!container) return;
+            container.innerHTML = '';
+            if (!list || list.length === 0) {
+                container.innerHTML = `<div class="no-users">Aucun dossier en attente.</div>`;
+                return;
+            }
+            list.forEach((item) => {
+                const d = item.data || {};
+                const fullName = `${d.firstName || ''} ${d.lastName || ''}`.trim() || item.id;
+                const birthMs = toMillis(d.birthDate);
+                const createdMs = toMillis(d.createdAt);
+                const docs = d.documents || {};
+                const identityPdf = docs.identityPdf || '';
+                const selfie = docs.selfie || '';
+                const hasDocs = !!(identityPdf || selfie);
+                const phone = d.phone || '';
+                const email = d.email || '';
+                const status = d.uploadStatus || '';
+
+                const card = document.createElement('div');
+                card.className = 'user-card';
+                card.innerHTML = `
+                    <h4>${escapeHtml(fullName)} <span class="badge" style="background:linear-gradient(45deg,#ffc107,#fd7e14)">En attente</span></h4>
+                    <p><strong>Collection:</strong> ${escapeHtml(collectionLabel(item.collection))} â€¢ ${escapeHtml(profileTypeLabel(d.profileType))}</p>
+                    ${email ? `<p><strong>Email:</strong> ${escapeHtml(email)}</p>` : ''}
+                    ${phone ? `<p><strong>TÃ©lÃ©phone:</strong> ${escapeHtml(phone)}</p>` : ''}
+                    <p><strong>Naissance:</strong> ${birthMs ? new Date(birthMs).toLocaleDateString('fr-FR') : 'N/A'}</p>
+                    ${createdMs ? `<p><strong>CrÃ©Ã©:</strong> ${new Date(createdMs).toLocaleDateString('fr-FR')}</p>` : ''}
+                    ${status ? `<p><strong>Upload:</strong> ${escapeHtml(status)}</p>` : ''}
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+                        <button class="identity-validate-btn" data-collection="${item.collection}" data-userid="${item.id}">Valider</button>
+                        ${hasDocs ? `<button class="identity-docs-btn" data-selfie="${encodeURIComponent(selfie)}" data-identity="${encodeURIComponent(identityPdf)}" data-name="${encodeURIComponent(fullName)}">Documents</button>` : ''}
+                    </div>
+                `;
+                const validateBtn = card.querySelector('.identity-validate-btn');
+                if (validateBtn) {
+                    validateBtn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await validateIdentity(item);
+                    });
+                }
+                const docsBtn = card.querySelector('.identity-docs-btn');
+                if (docsBtn) {
+                    docsBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        viewDocuments(docsBtn.dataset.selfie, docsBtn.dataset.identity, docsBtn.dataset.name);
+                    });
+                }
+                container.appendChild(card);
+            });
+        }
+
+        function filterIdentityList() {
+            const input = document.getElementById('identitySearchInput');
+            const status = document.getElementById('identityStatus');
+            const q = (input?.value || '').toLowerCase().trim();
+            if (!q) {
+                identityFiltered = identityUsers;
+                if (status) status.textContent = `${identityFiltered.length} en attente`;
+                renderIdentityList(identityFiltered);
+                return;
+            }
+            identityFiltered = identityUsers.filter((item) => {
+                const d = item.data || {};
+                const hay = [
+                    item.id,
+                    d.firstName,
+                    d.lastName,
+                    d.email,
+                    d.phone
+                ].filter(Boolean).join(' ').toLowerCase();
+                return hay.includes(q);
+            });
+            if (status) status.textContent = `${identityFiltered.length} rÃ©sultat(s)`;
+            renderIdentityList(identityFiltered);
+        }
+
+        async function validateIdentity(item) {
+            if (!item || !item.id || !item.collection) return;
+            if (!confirm('Valider ce compte ?')) return;
+            try {
+                const payload = {
+                    isValidated: true,
+                    validatedAt: serverTimestamp(),
+                    validatedBy: auth.currentUser ? auth.currentUser.uid : null,
+                    uploadStatus: 'validated',
+                };
+                await updateDoc(doc(db, item.collection, item.id), payload);
+                identityUsers = identityUsers.filter((u) => !(u.id === item.id && u.collection === item.collection));
+                identityFiltered = identityFiltered.filter((u) => !(u.id === item.id && u.collection === item.collection));
+                renderIdentityList(identityFiltered);
+                const status = document.getElementById('identityStatus');
+                if (status) status.textContent = `${identityFiltered.length} en attente`;
+                showToast('Validation effectuÃ©e');
+            } catch (e) {
+                showToast('Erreur validation: ' + e.message, true);
+            }
+        }
+
+        function isServiceProvidersContainer(containerId) {
+            return containerId === 'service-providers';
+        }
+
+        function isFoodPlacesContainer(containerId) {
+            return containerId === 'food-places';
+        }
+
+        function isFreelanceProsContainer(containerId) {
+            return containerId === 'freelance-pros';
+        }
+
+        function isCarRentalsContainer(containerId) {
+            return containerId === 'car-rentals';
+        }
+
+        function isTrainingOffersContainer(containerId) {
+            return containerId === 'training-offers';
+        }
+
+        function isJobPostsContainer(containerId) {
+            return containerId === 'job-posts';
+        }
+
+        function isClassifiedAdsContainer(containerId) {
+            return containerId === 'classified-ads';
+        }
+
+        function collectionNameFromContainerId(containerId) {
+            if (isServiceProvidersContainer(containerId)) return 'service_providers';
+            if (isFoodPlacesContainer(containerId)) return 'food_places';
+            if (isFreelanceProsContainer(containerId)) return 'freelance_pros';
+            if (isCarRentalsContainer(containerId)) return 'car_rentals';
+            if (isTrainingOffersContainer(containerId)) return 'training_offers';
+            if (isJobPostsContainer(containerId)) return 'job_posts';
+            if (isClassifiedAdsContainer(containerId)) return 'classified_ads';
+            // classic-users => classic_users, pro-users => pro_users, enterprise-users => enterprise_users
+            return containerId.replace('-users', '_users');
+        }
+
+        function paginationIdFromContainerId(containerId) {
+            // classic-users => classic-pagination (existing IDs)
+            if (containerId.endsWith('-users')) return containerId.replace('-users', '-pagination');
+            // service-providers => service-providers-pagination
+            return `${containerId}-pagination`;
+        }
+
         function renderUsers(containerId) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
-            let users = allUsers[containerId] || [];
-            users = filterUsersArray(users);
-            sortUsersArray(users, currentSort);
-            const totalPages = Math.ceil(users.length / usersPerPage);
+            let items = allUsers[containerId] || [];
+            items = filterUsersArray(items, containerId);
+            sortUsersArray(items, currentSort, containerId);
+            const totalPages = Math.ceil(items.length / usersPerPage);
             const start = (currentPage - 1) * usersPerPage;
             const end = start + usersPerPage;
-            const pageUsers = users.slice(start, end);
-            pageUsers.forEach(({ id, data: user }) => {
-                renderUserCard(container, user, containerId.replace('-users', '_users'), id);
+            const pageItems = items.slice(start, end);
+            const collectionName = collectionNameFromContainerId(containerId);
+
+            pageItems.forEach(({ id, data }) => {
+                if (isFoodPlacesContainer(containerId)) {
+                    renderFoodPlaceCard(container, data, collectionName, id);
+                } else if (isCarRentalsContainer(containerId)) {
+                    renderCarRentalCard(container, data, collectionName, id);
+                } else if (isTrainingOffersContainer(containerId)) {
+                    renderTrainingOfferCard(container, data, collectionName, id);
+                } else if (isJobPostsContainer(containerId)) {
+                    renderJobPostCard(container, data, collectionName, id);
+                } else if (isClassifiedAdsContainer(containerId)) {
+                    renderClassifiedAdCard(container, data, collectionName, id);
+                } else if (isServiceProvidersContainer(containerId) || isFreelanceProsContainer(containerId)) {
+                    renderProviderCard(container, data, collectionName, id);
+                } else {
+                    renderUserCard(container, data, collectionName, id);
+                }
             });
-            renderPagination(containerId.replace('-users', '-pagination'), totalPages);
+            renderPagination(paginationIdFromContainerId(containerId), totalPages);
+        }
+
+        function renderFoodPlaceCard(container, place, collectionName, placeId) {
+            const p = place || {};
+            const card = document.createElement('div');
+            card.className = 'user-card';
+
+            const name = String(p.name || 'Etablissement');
+            const type = String(p.type || p.category || '');
+            const city = String(p.cityLabel || p.city || '');
+            const eta = String(p.etaLabel || '');
+            const rating = (p.rating ?? '').toString();
+            const tags = Array.isArray(p.tags) ? p.tags.join(', ') : '';
+            const addedByEmail = String(p.createdByEmail || '');
+            const cover = sanitizeUrl(p.coverUrl || p.imageUrl || p.photoUrl) || 'https://via.placeholder.com/84';
+            const isOpen = (p.isOpen === true);
+            const isCertified = (p.isCertified === true) || (p.certified === true);
+
+            const certifyBtnHtml = isCertified
+                ? `<button class="uncertify-btn" data-collection="${collectionName}" data-userid="${placeId}" data-original="Decertifier">Decertifier</button>`
+                : `<button class="certify-btn" data-collection="${collectionName}" data-userid="${placeId}" data-original="Certifier">Certifier</button>`;
+
+            const deleteBtnHtml = `<button class="delete-btn" data-collection="${collectionName}" data-userid="${placeId}">Supprimer</button>`;
+
+            const encName = encodeURIComponent(name);
+
+            card.innerHTML = `
+                <div style="display:flex;align-items:flex-start;">
+                    <img src="${cover}" alt="Couverture" class="cover-thumb">
+                    <div style="flex:1;">
+                        <h4 style="margin-bottom:8px;">
+                            ${name}
+                            ${isCertified ? '<span class="badge">Certifie</span>' : ''}
+                        </h4>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+                            <span style="padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:${isOpen ? '#28a745' : '#6c757d'};color:#fff;">
+                                ${isOpen ? 'OUVERT' : 'FERME'}
+                            </span>
+                            ${rating ? `<span style="padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:#fff3e6;color:#ff7a18;border:1px solid rgba(255,122,24,0.25);">★ ${rating}</span>` : ''}
+                            ${eta ? `<span style="padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:#f1f3f5;color:#343a40;border:1px solid rgba(0,0,0,0.06);">${eta}</span>` : ''}
+                        </div>
+                        ${type ? `<p style="margin:6px 0;"><strong>Type:</strong> ${type}</p>` : ''}
+                        ${city ? `<p style="margin:6px 0;"><strong>Ville:</strong> ${city}</p>` : ''}
+                        <p style="margin:6px 0;"><strong>Ajoute par:</strong> ${addedByEmail || 'Inconnu'}</p>
+                        ${tags ? `<p style="margin:6px 0;"><strong>Tags:</strong> ${tags}</p>` : ''}
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+                            ${certifyBtnHtml}
+                            ${deleteBtnHtml}
+                            <button class="view-food-docs-btn" data-collection="${collectionName}" data-userid="${placeId}" data-name="${encName}">Voir details</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const viewBtn = card.querySelector('.view-food-docs-btn');
+            if (viewBtn) {
+                viewBtn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    try { await viewFoodPlaceDocuments(viewBtn.dataset.collection, viewBtn.dataset.userid, viewBtn.dataset.name); }
+                    catch (err) { console.error('viewFoodPlaceDocuments error', err); showToast('Erreur affichage details', true); }
+                });
+            }
+            const certifyBtn = card.querySelector('.certify-btn');
+            if (certifyBtn) {
+                certifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    certifyUser(certifyBtn.dataset.collection, certifyBtn.dataset.userid);
+                });
+            }
+            const uncertifyBtn = card.querySelector('.uncertify-btn');
+            if (uncertifyBtn) {
+                uncertifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    uncertifyUser(uncertifyBtn.dataset.collection, uncertifyBtn.dataset.userid);
+                });
+            }
+            const deleteBtn = card.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteUser(deleteBtn.dataset.collection, deleteBtn.dataset.userid);
+                });
+            }
+
+            // Click card => show raw details (reuse provider modal renderer)
+            card.onclick = () => openProviderModal(p);
+            container.appendChild(card);
+        }
+
+        function renderCarRentalCard(container, rental, collectionName, rentalId) {
+            const r = rental || {};
+            const card = document.createElement('div');
+            card.className = 'user-card';
+
+            const name = String(r.name || r.title || r.model || 'Voiture');
+            const city = String(r.cityLabel || r.city || '');
+            const price = String(r.priceLabel || r.price || r.pricePerDay || '');
+            const phone = String(r.phone || r.phoneNumber || '');
+            const email = String(r.email || '');
+            const tags = Array.isArray(r.tags) ? r.tags.map(t => (t === 'van_bus' ? 'Van/Bus' : t)).join(', ') : '';
+            const addedByEmail = String(r.createdByEmail || '');
+            const cover = sanitizeUrl(r.coverUrl || r.imageUrl || r.photoUrl) || 'https://via.placeholder.com/84';
+            const isCertified = (r.isCertified === true) || (r.certified === true);
+
+            const certifyBtnHtml = isCertified
+                ? `<button class="uncertify-btn" data-collection="${collectionName}" data-userid="${rentalId}" data-original="Decertifier">Decertifier</button>`
+                : `<button class="certify-btn" data-collection="${collectionName}" data-userid="${rentalId}" data-original="Certifier">Certifier</button>`;
+            const deleteBtnHtml = `<button class="delete-btn" data-collection="${collectionName}" data-userid="${rentalId}">Supprimer</button>`;
+
+            const formatPrice = (raw) => {
+                const s0 = (raw || '').toString().trim();
+                if (!s0) return { amount: '', suffix: '' };
+                const s = s0.replace(/\s+/g, ' ');
+                const m = s.match(/^(\d+(?:[.,]\d+)?)\s*\$?\s*(.*)$/);
+                if (m) {
+                    const amount = (m[1] || '').trim();
+                    let rest = (m[2] || '').trim();
+                    if (rest.startsWith('/')) rest = '/ ' + rest.substring(1).trim();
+                    return { amount: amount ? `${amount} $` : '', suffix: rest };
+                }
+                return { amount: s, suffix: '' };
+            };
+            const p = formatPrice(price);
+            const priceHtml = p.amount
+                ? `<span class="price-pill"><span class="price-amount">${p.amount}</span>${p.suffix ? `<span class="price-suffix">${p.suffix}</span>` : ''}</span>`
+                : '';
+
+            const encName = encodeURIComponent(name);
+
+            card.innerHTML = `
+                <div style="display:flex;align-items:flex-start;">
+                    <img src="${cover}" alt="Voiture" class="cover-thumb">
+                    <div style="flex:1;">
+                        <h4 style="margin-bottom:8px;">
+                            <span>${name}</span>
+                            ${priceHtml}
+                            ${isCertified ? '<span class="badge">Certifie</span>' : ''}
+                        </h4>
+                        ${city ? `<p style="margin:6px 0;"><strong>Ville:</strong> ${city}</p>` : ''}
+                        ${phone ? `<p style="margin:6px 0;"><strong>Telephone:</strong> ${phone}</p>` : ''}
+                        ${email ? `<p style="margin:6px 0;"><strong>Email:</strong> ${email}</p>` : ''}
+                        <p style="margin:6px 0;"><strong>Ajoute par:</strong> ${addedByEmail || 'Inconnu'}</p>
+                        ${tags ? `<p style="margin:6px 0;"><strong>Tags:</strong> ${tags}</p>` : ''}
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+                            ${certifyBtnHtml}
+                            ${deleteBtnHtml}
+                            <button class="view-car-details-btn" data-name="${encName}" data-collection="${collectionName}" data-userid="${rentalId}">Voir details</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const viewBtn = card.querySelector('.view-car-details-btn');
+            if (viewBtn) {
+                viewBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openProviderModal(r);
+                });
+            }
+            const certifyBtn = card.querySelector('.certify-btn');
+            if (certifyBtn) {
+                certifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    certifyUser(certifyBtn.dataset.collection, certifyBtn.dataset.userid);
+                });
+            }
+            const uncertifyBtn = card.querySelector('.uncertify-btn');
+            if (uncertifyBtn) {
+                uncertifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    uncertifyUser(uncertifyBtn.dataset.collection, uncertifyBtn.dataset.userid);
+                });
+            }
+            const deleteBtn = card.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteUser(deleteBtn.dataset.collection, deleteBtn.dataset.userid);
+                });
+            }
+
+            card.onclick = () => openProviderModal(r);
+            container.appendChild(card);
+        }
+
+        function renderTrainingOfferCard(container, offer, collectionName, offerId) {
+            const o = offer || {};
+            const card = document.createElement('div');
+            card.className = 'user-card';
+
+            const title = String(o.title || o.name || o.courseTitle || 'Formation');
+            const city = String(o.cityLabel || o.city || '');
+            const duration = String(o.durationLabel || o.duration || '');
+            const price = String(o.priceLabel || o.price || '');
+            const phone = String(o.phone || o.phoneNumber || '');
+            const email = String(o.email || '');
+            const addedByEmail = String(o.createdByEmail || o.createdByUserEmail || '');
+            const tags = Array.isArray(o.tags) ? o.tags.join(', ') : '';
+            const cover = sanitizeUrl(o.coverUrl || o.imageUrl || o.photoUrl) || 'https://via.placeholder.com/84';
+            const isCertified = (o.isCertified === true) || (o.certified === true);
+
+            const certifyBtnHtml = isCertified
+                ? `<button class="uncertify-btn" data-collection="${collectionName}" data-userid="${offerId}" data-original="Decertifier">Decertifier</button>`
+                : `<button class="certify-btn" data-collection="${collectionName}" data-userid="${offerId}" data-original="Certifier">Certifier</button>`;
+            const deleteBtnHtml = `<button class="delete-btn" data-collection="${collectionName}" data-userid="${offerId}">Supprimer</button>`;
+
+            const formatPrice = (raw) => {
+                const s0 = (raw || '').toString().trim();
+                if (!s0) return { amount: '', suffix: '' };
+                const s = s0.replace(/\s+/g, ' ');
+                const m = s.match(/^(\d+(?:[.,]\d+)?)\s*\$?\s*(.*)$/);
+                if (m) {
+                    const amount = (m[1] || '').trim();
+                    let rest = (m[2] || '').trim();
+                    if (rest.startsWith('/')) rest = '/ ' + rest.substring(1).trim();
+                    return { amount: amount ? `${amount} $` : '', suffix: rest };
+                }
+                return { amount: s, suffix: '' };
+            };
+            const p = formatPrice(price);
+            const priceHtml = p.amount
+                ? `<span class="price-pill"><span class="price-amount">${p.amount}</span>${p.suffix ? `<span class="price-suffix">${p.suffix}</span>` : ''}</span>`
+                : '';
+
+            const encName = encodeURIComponent(title);
+
+            card.innerHTML = `
+                <div style="display:flex;align-items:flex-start;">
+                    <img src="${cover}" alt="Couverture" class="cover-thumb">
+                    <div style="flex:1;">
+                        <h4 style="margin-bottom:8px;">
+                            <span>${title}</span>
+                            ${priceHtml}
+                            ${isCertified ? '<span class="badge">Certifie</span>' : ''}
+                        </h4>
+                        ${city ? `<p style="margin:6px 0;"><strong>Ville:</strong> ${city}</p>` : ''}
+                        ${duration ? `<p style="margin:6px 0;"><strong>Duree:</strong> ${duration}</p>` : ''}
+                        ${phone ? `<p style="margin:6px 0;"><strong>Telephone:</strong> ${phone}</p>` : ''}
+                        ${email ? `<p style="margin:6px 0;"><strong>Email:</strong> ${email}</p>` : ''}
+                        <p style="margin:6px 0;"><strong>Ajoute par:</strong> ${addedByEmail || 'Inconnu'}</p>
+                        ${tags ? `<p style="margin:6px 0;"><strong>Tags:</strong> ${tags}</p>` : ''}
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+                            ${certifyBtnHtml}
+                            ${deleteBtnHtml}
+                            <button class="view-training-details-btn" data-name="${encName}" data-collection="${collectionName}" data-userid="${offerId}">Voir details</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const viewBtn = card.querySelector('.view-training-details-btn');
+            if (viewBtn) {
+                viewBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openProviderModal(o);
+                });
+            }
+            const certifyBtn = card.querySelector('.certify-btn');
+            if (certifyBtn) {
+                certifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    certifyUser(certifyBtn.dataset.collection, certifyBtn.dataset.userid);
+                });
+            }
+            const uncertifyBtn = card.querySelector('.uncertify-btn');
+            if (uncertifyBtn) {
+                uncertifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    uncertifyUser(uncertifyBtn.dataset.collection, uncertifyBtn.dataset.userid);
+                });
+            }
+            const deleteBtn = card.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteUser(deleteBtn.dataset.collection, deleteBtn.dataset.userid);
+                });
+            }
+
+            card.onclick = () => openProviderModal(o);
+            container.appendChild(card);
+        }
+
+        function renderJobPostCard(container, job, collectionName, jobId) {
+            const j = job || {};
+            const card = document.createElement('div');
+            card.className = 'user-card';
+
+            const title = String(j.title || 'Offre');
+            const company = String(j.company || '');
+            const location = String(j.location || '');
+            const salary = String(j.salary || '');
+            const typeKey = String(j.typeKey || '');
+            const urgent = (j.urgent === true);
+            const phone = String(j.phone || j.phoneNumber || '');
+            const email = String(j.email || '');
+            const addedByEmail = String(j.createdByEmail || j.createdByUserEmail || '');
+            const cover = sanitizeUrl(j.coverUrl || j.imageUrl || j.photoUrl) || 'https://via.placeholder.com/84';
+            const isCertified = (j.isCertified === true) || (j.certified === true);
+
+            const typeLabel = (k) => {
+                const m = {
+                    'full_time': 'Temps plein',
+                    'part_time': 'Temps partiel',
+                    'freelance': 'Freelance',
+                    'internship': 'Stage',
+                };
+                return m[k] || (k || '');
+            };
+
+            const formatPrice = (raw) => {
+                const s0 = (raw || '').toString().trim();
+                if (!s0) return { amount: '', suffix: '' };
+                const s = s0.replace(/\s+/g, ' ');
+                const m = s.match(/^(\d+(?:[.,]\d+)?)\s*\$?\s*(.*)$/);
+                if (m) {
+                    const amount = (m[1] || '').trim();
+                    let rest = (m[2] || '').trim();
+                    if (rest.startsWith('/')) rest = '/ ' + rest.substring(1).trim();
+                    return { amount: amount ? `${amount} $` : '', suffix: rest };
+                }
+                return { amount: s, suffix: '' };
+            };
+            const p = formatPrice(salary);
+            const salaryHtml = p.amount
+                ? `<span class="price-pill"><span class="price-amount">${p.amount}</span>${p.suffix ? `<span class="price-suffix">${p.suffix}</span>` : ''}</span>`
+                : '';
+
+            const certifyBtnHtml = isCertified
+                ? `<button class="uncertify-btn" data-collection="${collectionName}" data-userid="${jobId}" data-original="Decertifier">Decertifier</button>`
+                : `<button class="certify-btn" data-collection="${collectionName}" data-userid="${jobId}" data-original="Certifier">Certifier</button>`;
+            const deleteBtnHtml = `<button class="delete-btn" data-collection="${collectionName}" data-userid="${jobId}">Supprimer</button>`;
+
+            card.innerHTML = `
+                <div style="display:flex;align-items:flex-start;">
+                    <img src="${cover}" alt="Couverture" class="cover-thumb">
+                    <div style="flex:1;">
+                        <h4 style="margin-bottom:8px;">
+                            <span>${title}</span>
+                            ${salaryHtml}
+                            ${urgent ? `<span style="margin-left:10px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:900;background:rgba(220,53,69,0.10);color:#dc3545;border:1px solid rgba(220,53,69,0.25);">URGENT</span>` : ''}
+                            ${isCertified ? '<span class="badge">Certifie</span>' : ''}
+                        </h4>
+                        ${company ? `<p style="margin:6px 0;"><strong>Entreprise:</strong> ${company}</p>` : ''}
+                        ${location ? `<p style="margin:6px 0;"><strong>Lieu:</strong> ${location}</p>` : ''}
+                        ${typeKey ? `<p style="margin:6px 0;"><strong>Type:</strong> ${typeLabel(typeKey)}</p>` : ''}
+                        ${phone ? `<p style="margin:6px 0;"><strong>Telephone:</strong> ${phone}</p>` : ''}
+                        ${email ? `<p style="margin:6px 0;"><strong>Email:</strong> ${email}</p>` : ''}
+                        <p style="margin:6px 0;"><strong>Ajoute par:</strong> ${addedByEmail || 'Inconnu'}</p>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+                            ${certifyBtnHtml}
+                            ${deleteBtnHtml}
+                            <button class="view-job-details-btn" data-collection="${collectionName}" data-userid="${jobId}">Voir details</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const viewBtn = card.querySelector('.view-job-details-btn');
+            if (viewBtn) {
+                viewBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openProviderModal(j);
+                });
+            }
+            const certifyBtn = card.querySelector('.certify-btn');
+            if (certifyBtn) {
+                certifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    certifyUser(certifyBtn.dataset.collection, certifyBtn.dataset.userid);
+                });
+            }
+            const uncertifyBtn = card.querySelector('.uncertify-btn');
+            if (uncertifyBtn) {
+                uncertifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    uncertifyUser(uncertifyBtn.dataset.collection, uncertifyBtn.dataset.userid);
+                });
+            }
+            const deleteBtn = card.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteUser(deleteBtn.dataset.collection, deleteBtn.dataset.userid);
+                });
+            }
+
+            card.onclick = () => openProviderModal(j);
+            container.appendChild(card);
+        }
+
+        function renderClassifiedAdCard(container, ad, collectionName, adId) {
+            const a = ad || {};
+            const card = document.createElement('div');
+            card.className = 'user-card';
+
+            const title = String(a.title || 'Annonce');
+            const categoryKey = String(a.categoryKey || '');
+            const location = String(a.location || '');
+            const price = String(a.price || '');
+            const phone = String(a.phone || a.phoneNumber || '');
+            const email = String(a.email || '');
+            const addedByEmail = String(a.createdByEmail || a.createdByUserEmail || '');
+            const cover = sanitizeUrl(a.coverUrl || a.imageUrl || a.photoUrl) || 'https://via.placeholder.com/84';
+            const isCertified = (a.isCertified === true) || (a.certified === true);
+
+            const catLabel = (k) => {
+                const m = {
+                    'sale': 'Vente',
+                    'rent': 'Location',
+                    'service': 'Services',
+                    'vehicle': 'Vehicule',
+                    'other': 'Autre',
+                };
+                return m[k] || (k || '');
+            };
+
+            const formatPrice = (raw) => {
+                const s0 = (raw || '').toString().trim();
+                if (!s0) return { amount: '', suffix: '' };
+                const s = s0.replace(/\s+/g, ' ');
+                const m = s.match(/^(\d+(?:[.,]\d+)?)\s*\$?\s*(.*)$/);
+                if (m) {
+                    const amount = (m[1] || '').trim();
+                    let rest = (m[2] || '').trim();
+                    if (rest.startsWith('/')) rest = '/ ' + rest.substring(1).trim();
+                    return { amount: amount ? `${amount} $` : '', suffix: rest };
+                }
+                return { amount: s, suffix: '' };
+            };
+            const p = formatPrice(price);
+            const priceHtml = p.amount
+                ? `<span class="price-pill"><span class="price-amount">${p.amount}</span>${p.suffix ? `<span class="price-suffix">${p.suffix}</span>` : ''}</span>`
+                : '';
+
+            const certifyBtnHtml = isCertified
+                ? `<button class="uncertify-btn" data-collection="${collectionName}" data-userid="${adId}" data-original="Decertifier">Decertifier</button>`
+                : `<button class="certify-btn" data-collection="${collectionName}" data-userid="${adId}" data-original="Certifier">Certifier</button>`;
+            const deleteBtnHtml = `<button class="delete-btn" data-collection="${collectionName}" data-userid="${adId}">Supprimer</button>`;
+
+            card.innerHTML = `
+                <div style="display:flex;align-items:flex-start;">
+                    <img src="${cover}" alt="Couverture" class="cover-thumb">
+                    <div style="flex:1;">
+                        <h4 style="margin-bottom:8px;">
+                            <span>${title}</span>
+                            ${priceHtml}
+                            ${isCertified ? '<span class="badge">Certifie</span>' : ''}
+                        </h4>
+                        ${categoryKey ? `<p style="margin:6px 0;"><strong>Categorie:</strong> ${catLabel(categoryKey)}</p>` : ''}
+                        ${location ? `<p style="margin:6px 0;"><strong>Lieu:</strong> ${location}</p>` : ''}
+                        ${phone ? `<p style="margin:6px 0;"><strong>Telephone:</strong> ${phone}</p>` : ''}
+                        ${email ? `<p style="margin:6px 0;"><strong>Email:</strong> ${email}</p>` : ''}
+                        <p style="margin:6px 0;"><strong>Ajoute par:</strong> ${addedByEmail || 'Inconnu'}</p>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+                            ${certifyBtnHtml}
+                            ${deleteBtnHtml}
+                            <button class="view-ad-details-btn" data-collection="${collectionName}" data-userid="${adId}">Voir details</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const viewBtn = card.querySelector('.view-ad-details-btn');
+            if (viewBtn) {
+                viewBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openProviderModal(a);
+                });
+            }
+            const certifyBtn = card.querySelector('.certify-btn');
+            if (certifyBtn) {
+                certifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    certifyUser(certifyBtn.dataset.collection, certifyBtn.dataset.userid);
+                });
+            }
+            const uncertifyBtn = card.querySelector('.uncertify-btn');
+            if (uncertifyBtn) {
+                uncertifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    uncertifyUser(uncertifyBtn.dataset.collection, uncertifyBtn.dataset.userid);
+                });
+            }
+            const deleteBtn = card.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteUser(deleteBtn.dataset.collection, deleteBtn.dataset.userid);
+                });
+            }
+
+            card.onclick = () => openProviderModal(a);
+            container.appendChild(card);
         }
 
         function renderUserCard(container, user, collectionName, userId) {
+            console.debug('renderUserCard', collectionName, userId, user);
             const userCard = document.createElement('div');
             userCard.className = 'user-card';
             userCard.setAttribute('data-name', `${user.firstName || ''} ${user.lastName || ''}`.toLowerCase());
@@ -1042,14 +2040,51 @@
             userCard.setAttribute('data-status', user.isCertified ? 'certified' : 'pending');
             userCard.onclick = () => openModal(user);
             // Attempt to show selfie/identity links if present in user document
-            const selfieUrl = user.selfieUrl || user.selfie || user.photoUrl || '';
-            const identityUrl = user.identityUrl || user.identity || '';
+            // Support nested `documents` structure written by the registration flow and tolerate variant key names
+            const docs = (user.documents && typeof user.documents === 'object') ? user.documents : {};
+            const maybe = (obj, ...keys) => {
+                for (const k of keys) {
+                    if (!obj) continue;
+                    if (Object.prototype.hasOwnProperty.call(obj, k) && obj[k]) return obj[k];
+                    const lk = k.toLowerCase();
+                    const foundKey = Object.keys(obj).find(x => x.toLowerCase() === lk);
+                    if (foundKey && obj[foundKey]) return obj[foundKey];
+                }
+                return null;
+            };
 
+            const rawSelfie = maybe(user, 'selfieUrl', 'selfie', 'photoUrl', 'photo');
+            const rawIdentity = maybe(user, 'identityUrl', 'identityPdf', 'identity', 'document', 'identity_url');
+            const sanitize = (u) => {
+                if (!u) return '';
+                try { return String(u).trim().replace(/\s+/g, ''); } catch (_) { return '';} 
+            };
+            const selfieUrl = sanitize(rawSelfie || maybe(docs, 'selfie', 'selfieUrl'));
+            const identityUrl = sanitize(rawIdentity || maybe(docs, 'identityPdf', 'identity'));
+            const encSelfieEarly = selfieUrl ? encodeURIComponent(selfieUrl) : '';
+            const fullnameEarly = encodeURIComponent(`${user.firstName || ''} ${user.lastName || ''}`.trim());
+
+            // Build files section using data-attributes (no inline onclick)
             let filesHtml = '';
-            if (selfieUrl) filesHtml += `<p><strong>Selfie:</strong> <img src="${selfieUrl}" alt="Selfie" style="width:80px;height:80px;border-radius:8px;object-fit:cover;margin-top:6px;"/></p>`;
+            if (selfieUrl) filesHtml += `<p><strong>Selfie:</strong> <img class="user-selfie-thumb" data-enc-selfie="${encSelfieEarly}" src="${selfieUrl}" alt="Selfie" style="width:80px;height:80px;border-radius:8px;object-fit:cover;margin-top:6px;cursor:pointer;"/></p>`;
             else filesHtml += `<p><strong>Selfie:</strong> <small>Aucun</small></p>`;
-            if (identityUrl) filesHtml += `<p><strong>Document:</strong> <a href="${identityUrl}" target="_blank">Voir PDF</a></p>`;
+            if (identityUrl) filesHtml += `<p><strong>Document:</strong> <a class="user-identity-link" data-identity="${encodeURIComponent(identityUrl)}" href="${identityUrl}" target="_blank" rel="noopener">Voir fichier</a></p>`;
             else filesHtml += `<p><strong>Document:</strong> <small>Aucun</small></p>`;
+
+            const statusOk = user.uploadStatus && typeof user.uploadStatus === 'string' && user.uploadStatus.toLowerCase().startsWith('comp');
+            let viewBtnHtml = '';
+            if (statusOk && (selfieUrl || identityUrl)) {
+                const encSelfie = selfieUrl ? encodeURIComponent(selfieUrl) : '';
+                const encIdentity = identityUrl ? encodeURIComponent(identityUrl) : '';
+                const fullname = encodeURIComponent(`${user.firstName || ''} ${user.lastName || ''}`.trim());
+                viewBtnHtml = `<div style="margin-top:8px;"><button class="view-docs-btn" data-enc-selfie="${encSelfie}" data-enc-identity="${encIdentity}" data-fullname="${fullname}">Visualiser documents</button></div>`;
+            }
+
+            const certifyBtnHtml = user.isCertified === true
+                ? `<button class="uncertify-btn" data-collection="${collectionName}" data-userid="${userId}" data-original="Décertifier">Décertifier</button>`
+                : `<button class="certify-btn" data-collection="${collectionName}" data-userid="${userId}" data-original="Certifier">Certifier</button>`;
+
+            const deleteBtnHtml = `<button class="delete-btn" data-collection="${collectionName}" data-userid="${userId}">Supprimer</button>`;
 
             userCard.innerHTML = `
                 <div style="display: flex; align-items: center;">
@@ -1064,18 +2099,515 @@
                         <p><strong>Adresse:</strong> ${user.address || ''}</p>
                         <p><strong>Genre:</strong> ${user.genre || 'N/A'}</p>
                         <p><strong>Date de naissance:</strong> ${user.birthDate ? new Date(user.birthDate).toLocaleDateString() : 'N/A'}</p>
-                        <p><strong>Statut upload:</strong> <span class="${user.uploadStatus === 'complete' ? 'status-complete' : 'status-error'}">${user.uploadStatus || 'N/A'}</span></p>
-                        ${user.isCertified === true
-                            ? `<button data-userid="${collectionName}_${userId}" data-original="Décertifier" onclick="event.stopPropagation(); uncertifyUser('${collectionName}', '${userId}')">Décertifier</button>`
-                            : `<button data-userid="${collectionName}_${userId}" data-original="Certifier" onclick="event.stopPropagation(); certifyUser('${collectionName}', '${userId}')">Certifier</button>`
-                        }
-                        <button onclick="event.stopPropagation(); deleteUser('${collectionName}', '${userId}')">Supprimer</button>
-                        <div style="margin-top:10px;">${filesHtml}</div>
+                        <p><strong>Statut upload:</strong> <span class="${statusOk ? 'status-complete' : 'status-error'}">${user.uploadStatus || 'N/A'}</span></p>
+                        ${certifyBtnHtml}
+                        ${deleteBtnHtml}
+                        <div style="margin-top:10px;">${filesHtml}${viewBtnHtml}</div>
                     </div>
                 </div>
             `;
+
+            // Attach event listeners for buttons and thumbnails
+            // View documents
+            const viewBtn = userCard.querySelector('.view-docs-btn');
+            if (viewBtn) {
+                viewBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    try { viewDocuments(viewBtn.dataset.encSelfie, viewBtn.dataset.encIdentity, viewBtn.dataset.fullname); } catch (err) { console.error('viewDocuments error', err); }
+                });
+            }
+            // Selfie thumbnail click
+            const selfieThumb = userCard.querySelector('.user-selfie-thumb');
+            if (selfieThumb) {
+                selfieThumb.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    try { viewDocuments(selfieThumb.dataset.encSelfie, '', fullnameEarly); } catch (err) { console.error('viewDocuments error', err); }
+                });
+            }
+            // Certify / uncertify
+            const certifyBtn = userCard.querySelector('.certify-btn');
+            if (certifyBtn) {
+                certifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    certifyUser(certifyBtn.dataset.collection, certifyBtn.dataset.userid);
+                });
+            }
+            const uncertifyBtn = userCard.querySelector('.uncertify-btn');
+            if (uncertifyBtn) {
+                uncertifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    uncertifyUser(uncertifyBtn.dataset.collection, uncertifyBtn.dataset.userid);
+                });
+            }
+            const deleteBtn = userCard.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteUser(deleteBtn.dataset.collection, deleteBtn.dataset.userid);
+                });
+            }
+
             container.appendChild(userCard);
         }
+
+        function sanitizeUrl(u) {
+            if (!u) return '';
+            try { return String(u).trim().replace(/\s+/g, ''); } catch (_) { return ''; }
+        }
+
+        function extractProviderDocsFromData(p) {
+            // Try multiple shapes:
+            // - p.verificationDocs: array of urls or objects {url,label,type}
+            // - p.documents: object map
+            // - direct fields (selfieUrl/identityUrl/...)
+            const out = [];
+            const push = (label, url) => {
+                const clean = sanitizeUrl(url);
+                if (!clean) return;
+                out.push({ label: label || 'Document', url: clean });
+            };
+
+            if (p && Array.isArray(p.verificationDocs)) {
+                p.verificationDocs.forEach((d, i) => {
+                    if (!d) return;
+                    if (typeof d === 'string') return push(`Document ${i + 1}`, d);
+                    if (typeof d === 'object') return push(d.label || d.name || `Document ${i + 1}`, d.url || d.fileUrl || d.downloadUrl);
+                });
+            }
+
+            const docsObj = (p && p.documents && typeof p.documents === 'object') ? p.documents : null;
+            if (docsObj) {
+                Object.entries(docsObj).forEach(([k, v]) => push(k, v));
+            }
+
+            // Common direct keys
+            const keys = [
+                ['Selfie', 'selfieUrl'],
+                ['Selfie', 'selfie'],
+                ['Identite', 'identityUrl'],
+                ['Identite', 'identityPdf'],
+                ['Identite', 'identity'],
+                ['Document', 'documentUrl'],
+                ['Document', 'docUrl'],
+                ['Document', 'proofUrl'],
+            ];
+            keys.forEach(([label, key]) => {
+                if (p && Object.prototype.hasOwnProperty.call(p, key)) push(label, p[key]);
+            });
+
+            // Deduplicate
+            const seen = new Set();
+            return out.filter(d => {
+                if (!d.url) return false;
+                if (seen.has(d.url)) return false;
+                seen.add(d.url);
+                return true;
+            });
+        }
+
+        function renderProviderCard(container, provider, collectionName, providerId) {
+            const p = provider || {};
+            const card = document.createElement('div');
+            card.className = 'user-card';
+
+            const name = (p.name || p.displayName || 'Prestataire').toString();
+            const role = (p.role || p.title || '').toString();
+            const phone = (p.phone || p.phoneNumber || '').toString();
+            const email = (p.email || '').toString();
+            const addedByEmail = (p.createdByEmail || '').toString();
+            const city = (p.cityLabel || p.city || '').toString();
+            const price = (p.priceLabel || p.price || '').toString();
+            const rating = (p.rating ?? '').toString();
+            const reviews = (p.reviews ?? p.reviewsCount ?? '').toString();
+            const tags = Array.isArray(p.tags) ? p.tags.join(', ') : '';
+            const avatar = sanitizeUrl(p.avatarUrl || p.photoUrl || p.imageUrl) || 'https://via.placeholder.com/50';
+            const isCertified = (p.isCertified === true) || (p.certified === true);
+
+            const docs = extractProviderDocsFromData(p);
+            const docsCount = docs.length;
+            const docsHint = docsCount > 0 ? `${docsCount} document(s)` : 'Aucun document';
+            const encName = encodeURIComponent(name);
+
+            const formatPrice = (raw) => {
+                const s0 = (raw || '').toString().trim();
+                if (!s0) return { amount: '', suffix: '' };
+                const s = s0.replace(/\s+/g, ' ');
+                const m = s.match(/^(\d+(?:[.,]\d+)?)\s*\$?\s*(.*)$/);
+                if (m) {
+                    const amount = (m[1] || '').trim();
+                    let rest = (m[2] || '').trim();
+                    if (rest.startsWith('/')) rest = '/ ' + rest.substring(1).trim();
+                    return { amount: amount ? `${amount} $` : '', suffix: rest };
+                }
+                // If we can't parse, show raw as amount and keep suffix empty.
+                return { amount: s, suffix: '' };
+            };
+            const priceParts = formatPrice(price);
+            const priceHtml = priceParts.amount
+                ? `<span class="price-pill"><span class="price-amount">${priceParts.amount}</span>${priceParts.suffix ? `<span class="price-suffix">${priceParts.suffix}</span>` : ''}</span>`
+                : '';
+
+            const certifyBtnHtml = isCertified
+                ? `<button class="uncertify-btn" data-collection="${collectionName}" data-userid="${providerId}" data-original="Decertifier">Decertifier</button>`
+                : `<button class="certify-btn" data-collection="${collectionName}" data-userid="${providerId}" data-original="Certifier">Certifier</button>`;
+
+            const deleteBtnHtml = `<button class="delete-btn" data-collection="${collectionName}" data-userid="${providerId}">Supprimer</button>`;
+
+            card.innerHTML = `
+                <div style="display:flex;align-items:flex-start;">
+                    <img src="${avatar}" alt="Avatar" class="avatar">
+                    <div style="flex:1;">
+                        <h4>
+                            <span>${name}</span>
+                            ${priceHtml}
+                            ${isCertified ? '<span class="badge">Certifie</span>' : ''}
+                        </h4>
+                        ${role ? `<p><strong>Role:</strong> ${role}</p>` : ''}
+                        ${phone ? `<p><strong>Telephone:</strong> ${phone}</p>` : ''}
+                        ${email ? `<p><strong>Email:</strong> ${email}</p>` : ''}
+                        <p><strong>Ajoute par:</strong> ${addedByEmail || 'Inconnu'}</p>
+                        ${city ? `<p><strong>Ville:</strong> ${city}</p>` : ''}
+                        ${(rating || reviews) ? `<p><strong>Note:</strong> ${rating || 'N/A'} ${reviews ? `(${reviews})` : ''}</p>` : ''}
+                        ${tags ? `<p><strong>Tags:</strong> ${tags}</p>` : ''}
+                        <p><strong>Documents:</strong> ${docsHint}</p>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+                            ${certifyBtnHtml}
+                            ${deleteBtnHtml}
+                            <button class="view-provider-docs-btn" data-collection="${collectionName}" data-userid="${providerId}" data-name="${encName}">Voir documents</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Stop modal opening on button clicks
+            const viewBtn = card.querySelector('.view-provider-docs-btn');
+            if (viewBtn) {
+                viewBtn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    try { await viewProviderDocuments(viewBtn.dataset.collection, viewBtn.dataset.userid, viewBtn.dataset.name); }
+                    catch (err) { console.error('viewProviderDocuments error', err); showToast('Erreur affichage documents', true); }
+                });
+            }
+
+            const certifyBtn = card.querySelector('.certify-btn');
+            if (certifyBtn) {
+                certifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    certifyUser(certifyBtn.dataset.collection, certifyBtn.dataset.userid);
+                });
+            }
+            const uncertifyBtn = card.querySelector('.uncertify-btn');
+            if (uncertifyBtn) {
+                uncertifyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    uncertifyUser(uncertifyBtn.dataset.collection, uncertifyBtn.dataset.userid);
+                });
+            }
+            const deleteBtn = card.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteUser(deleteBtn.dataset.collection, deleteBtn.dataset.userid);
+                });
+            }
+
+            // Click card => quick details
+            card.onclick = () => openProviderModal(p);
+
+            container.appendChild(card);
+        }
+
+        function viewDocuments(encSelfie, encIdentity, encName) {
+            const selfie = encSelfie ? decodeURIComponent(encSelfie) : '';
+            const identity = encIdentity ? decodeURIComponent(encIdentity) : '';
+            const name = encName ? decodeURIComponent(encName) : '';
+            let html = `<h3>Documents de ${name || 'utilisateur'}</h3>`;
+            if (selfie) {
+                // clickable preview that opens a fullscreen zoom
+                html += `<div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;"><img class="modal-image-preview" src="${selfie}" data-full="${selfie}" style="max-width:320px;border-radius:8px;object-fit:cover;cursor:zoom-in;" alt="selfie"/></div>`;
+            }
+            if (identity) {
+                const lower = identity.toLowerCase();
+                if (lower.endsWith('.pdf')) {
+                    // show iframe plus action to open in new tab
+                        html += `<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;"><button id=\"openPdfNewTab\" style=\"padding:8px 12px;border-radius:6px;background:#007bff;color:#fff;border:none;cursor:pointer;\">Ouvrir le PDF dans un nouvel onglet</button></div>`;
+                        html += `<div style=\"position:relative;height:500px;\">` +
+                                `<div class=\"iframe-loader\" id=\"iframeLoader_${encodeURIComponent(identity)}\"><div class=\"spinner\"></div></div>` +
+                                `<iframe id=\"identityIframe\" class=\"identity-iframe\" src=\"${identity}\" style=\"width:100%;height:100%;border:0;border-radius:8px;opacity:0;\"></iframe></div>`;
+                } else {
+                    html += `<p><a href="${identity}" target="_blank" rel="noopener">Ouvrir le document</a></p>`;
+                }
+            }
+            if (!selfie && !identity) html += `<p><em>Aucun document disponible</em></p>`;
+            document.getElementById('modal-name').textContent = name || 'Documents utilisateur';
+            document.getElementById('modal-details').innerHTML = html;
+            const modalEl = document.getElementById('userModal');
+            modalEl.style.display = 'block';
+            // trigger open animation
+            setTimeout(() => modalEl.classList.add('open'), 20);
+
+            // Attach behavior: open PDF button + image zoom
+            setTimeout(() => {
+                const img = document.querySelector('#userModal .modal-image-preview');
+                if (img) {
+                    img.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openImageZoom(img.dataset.full);
+                    });
+                }
+                const pdfBtn = document.getElementById('openPdfNewTab');
+                if (pdfBtn) {
+                    pdfBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        try { window.open(decodeURIComponent(encIdentity), '_blank', 'noopener'); } catch (_) { window.open(decodeURIComponent(encIdentity)); }
+                    });
+                }
+                const iframe = document.getElementById('identityIframe');
+                if (iframe) {
+                    const loader = document.getElementById(`iframeLoader_${encodeURIComponent(identity)}`);
+                    const cleanup = () => { if (loader && loader.parentNode) loader.parentNode.removeChild(loader); };
+                    iframe.addEventListener('load', () => { try { cleanup(); iframe.classList.add('loaded'); } catch(_){} });
+                    iframe.addEventListener('error', () => {
+                        try {
+                            cleanup();
+                            const alt = document.createElement('p');
+                            alt.innerHTML = `<a href="${identity}" target="_blank" rel="noopener">Ouvrir le document dans un nouvel onglet</a>`;
+                            iframe.parentNode.appendChild(alt);
+                        } catch(_){}
+                    });
+                    // Fallback timeout: if still showing after 8s, offer direct link
+                    setTimeout(() => {
+                        if (document.getElementById(`iframeLoader_${encodeURIComponent(identity)}`)) {
+                            try {
+                                const alt = document.createElement('p');
+                                alt.innerHTML = `<a href="${identity}" target="_blank" rel="noopener">Ouvrir le document dans un nouvel onglet</a>`;
+                                iframe.parentNode.appendChild(alt);
+                            } catch(_){}
+                        }
+                    }, 8000);
+                }
+            }, 50);
+        }
+
+        function openProviderModal(provider) {
+            const p = provider || {};
+            const name = (p.name || p.displayName || 'Prestataire').toString();
+            document.getElementById('modal-name').textContent = name;
+            let details = '';
+            for (const [key, value] of Object.entries(p)) {
+                let display = '';
+                if (value === null || value === undefined) display = '<em>vide</em>';
+                else if (typeof value === 'object') display = `<pre style="white-space:pre-wrap;max-height:200px;overflow:auto;">${JSON.stringify(value, null, 2)}</pre>`;
+                else display = String(value);
+                details += `<p><strong>${key}:</strong> ${display}</p>`;
+            }
+            document.getElementById('modal-details').innerHTML = details;
+            const modalEl = document.getElementById('userModal');
+            modalEl.style.display = 'block';
+            setTimeout(() => modalEl.classList.add('open'), 20);
+        }
+
+        async function viewProviderDocuments(collectionName, providerId, encName) {
+            const name = encName ? decodeURIComponent(encName) : providerId;
+            let p = {};
+            try {
+                const snap = await getDoc(doc(db, collectionName, providerId));
+                if (snap.exists()) p = snap.data() || {};
+            } catch (e) {
+                console.error('getDoc provider error', e);
+            }
+
+            let docs = extractProviderDocsFromData(p);
+
+            // Fallback: look for a subcollection with documents (support a few common names)
+            if (!docs || docs.length === 0) {
+                const subNames = ['verification_docs', 'verificationDocs', 'documents', 'provider_docs'];
+                for (const subName of subNames) {
+                    try {
+                        const sub = await getDocs(collection(db, collectionName, providerId, subName));
+                        sub.forEach(d => {
+                            const x = d.data() || {};
+                            const url = sanitizeUrl(x.url || x.fileUrl || x.downloadUrl);
+                            if (!url) return;
+                            docs.push({ label: (x.label || x.name || 'Document').toString(), url });
+                        });
+                        if (docs.length > 0) break;
+                    } catch (e) {
+                        // Ignore if subcollection doesn't exist
+                    }
+                }
+            }
+
+            let html = `<h3>Documents de ${name || 'prestataire'}</h3>`;
+            if (!docs || docs.length === 0) {
+                html += `<p><em>Aucun document disponible</em></p>`;
+            } else {
+                html += `<div style="display:flex;flex-direction:column;gap:12px;margin-top:10px;">`;
+                docs.forEach((d) => {
+                    const url = d.url || '';
+                    const label = (d.label || 'Document').toString();
+                    const lower = url.toLowerCase();
+                    const isImg = /\.(png|jpg|jpeg|webp|gif)(\?|$)/.test(lower);
+                    const isPdf = /\.pdf(\?|$)/.test(lower);
+                    if (isImg) {
+                        html += `
+                            <div style="display:flex;gap:12px;align-items:center;">
+                                <img class="modal-image-preview" src="${url}" data-full="${url}"
+                                     style="width:120px;height:120px;border-radius:10px;object-fit:cover;cursor:zoom-in;"/>
+                                <div style="flex:1;">
+                                    <div style="font-weight:700;margin-bottom:4px;">${label}</div>
+                                    <a href="${url}" target="_blank" rel="noopener">Ouvrir</a>
+                                </div>
+                            </div>
+                        `;
+                    } else if (isPdf) {
+                        html += `
+                            <div>
+                                <div style="font-weight:700;margin-bottom:4px;">${label} (PDF)</div>
+                                <a href="${url}" target="_blank" rel="noopener">Ouvrir le PDF</a>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div>
+                                <div style="font-weight:700;margin-bottom:4px;">${label}</div>
+                                <a href="${url}" target="_blank" rel="noopener">Ouvrir le fichier</a>
+                            </div>
+                        `;
+                    }
+                });
+                html += `</div>`;
+            }
+
+            document.getElementById('modal-name').textContent = name || 'Documents prestataire';
+            document.getElementById('modal-details').innerHTML = html;
+            const modalEl = document.getElementById('userModal');
+            modalEl.style.display = 'block';
+            setTimeout(() => modalEl.classList.add('open'), 20);
+
+            // Attach zoom to all previews
+            setTimeout(() => {
+                document.querySelectorAll('#userModal .modal-image-preview').forEach(img => {
+                    img.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openImageZoom(img.dataset.full);
+                    });
+                });
+            }, 30);
+        }
+
+        async function viewFoodPlaceDocuments(collectionName, placeId, encName) {
+            const name = encName ? decodeURIComponent(encName) : placeId;
+            let p = {};
+            try {
+                const snap = await getDoc(doc(db, collectionName, placeId));
+                if (snap.exists()) p = snap.data() || {};
+            } catch (e) {
+                console.error('getDoc food place error', e);
+            }
+
+            const cover = sanitizeUrl(p.coverUrl || p.imageUrl || p.photoUrl);
+            let html = `<h3>${name}</h3>`;
+            if (cover) {
+                html += `<div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;"><img class="modal-image-preview" src="${cover}" data-full="${cover}" style="max-width:420px;border-radius:12px;object-fit:cover;cursor:zoom-in;" alt="cover"/></div>`;
+            }
+            html += `<div style="margin-top:10px;"><pre style="white-space:pre-wrap;max-height:320px;overflow:auto;">${JSON.stringify(p, null, 2)}</pre></div>`;
+
+            document.getElementById('modal-name').textContent = name || 'Details';
+            document.getElementById('modal-details').innerHTML = html;
+            const modalEl = document.getElementById('userModal');
+            modalEl.style.display = 'block';
+            setTimeout(() => modalEl.classList.add('open'), 20);
+
+            setTimeout(() => {
+                const img = document.querySelector('#userModal .modal-image-preview');
+                if (img) {
+                    img.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openImageZoom(img.dataset.full);
+                    });
+                }
+            }, 30);
+        }
+
+        // Expose functions to global scope so inline onclick handlers work
+        // (script uses type="module" so functions are module-scoped by default)
+        window.viewDocuments = viewDocuments;
+        window.viewProviderDocuments = viewProviderDocuments;
+
+        // Image zoom modal functions
+        function openImageZoom(url) {
+            let mz = document.getElementById('imageZoomModal');
+            if (!mz) {
+                mz = document.createElement('div');
+                mz.id = 'imageZoomModal';
+                mz.className = 'image-zoom-modal';
+                mz.innerHTML = `<div class='image-zoom-content'><img id='imageZoomImg' src='' alt='preview'/></div><div class='image-zoom-close' id='imageZoomClose'>&times;</div>`;
+                document.body.appendChild(mz);
+                mz.addEventListener('click', (e) => { if (e.target === mz) closeImageZoom(); });
+                document.getElementById('imageZoomClose').addEventListener('click', closeImageZoom);
+                document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeImageZoom(); });
+            }
+            const img = document.getElementById('imageZoomImg');
+            img.src = url;
+            mz.style.display = 'flex';
+            // Small entrance animation
+            setTimeout(() => { img.classList.add('open'); }, 20);
+        }
+
+        function closeImageZoom() {
+            const mz = document.getElementById('imageZoomModal');
+            if (!mz) return;
+            mz.style.display = 'none';
+            const img = document.getElementById('imageZoomImg');
+            if (img) img.src = '';
+        }
+        window.openImageZoom = openImageZoom;
+        window.closeImageZoom = closeImageZoom;
+
+        // Define exportData referenced by some event listeners; delegate to exportPDF
+        function exportData() {
+            try { exportPDF(); } catch (e) { console.error('exportData error', e); }
+        }
+        window.exportData = exportData;
+
+        // Utility: debounce for search
+        function debounce(fn, wait) {
+            let t;
+            return function(...args) {
+                clearTimeout(t);
+                t = setTimeout(() => fn.apply(this, args), wait);
+            };
+        }
+
+        // Export visible users to CSV
+        function exportCSV() {
+            try {
+                let rows = [['Prénom','Nom','Email','Téléphone','État upload','Certifié']];
+                const userContainers = ['classic-users', 'pro-users', 'enterprise-users'];
+                userContainers.flatMap(k => allUsers[k] || []).forEach(({ data: u }) => {
+                    rows.push([
+                        u.firstName || '',
+                        u.lastName || '',
+                        u.email || '',
+                        u.phone || '',
+                        u.uploadStatus || '',
+                        u.isCertified ? 'Oui' : 'Non'
+                    ]);
+                });
+                const csv = rows.map(r => r.map(cell => '"' + String(cell).replace(/"/g,'""') + '"').join(',')).join('\n');
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'users_export.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (e) { console.error('exportCSV error', e); showToast('Erreur export CSV', true); }
+        }
+        window.exportCSV = exportCSV;
 
         function renderPagination(paginationId, totalPages) {
             const pagination = document.getElementById(paginationId);
@@ -1098,10 +2630,13 @@
 
         function updateStats() {
             let total = 0, certified = 0, pending = 0;
-            Object.values(allUsers).forEach(users => {
+            // Stats are for user accounts only (classic/pro/enterprise), not service providers.
+            const userContainers = ['classic-users', 'pro-users', 'enterprise-users'];
+            userContainers.forEach((k) => {
+                const users = allUsers[k] || [];
                 users.forEach(({ data: user }) => {
                     total++;
-                    if (user.isCertified) certified++;
+                    if (user && user.isCertified) certified++;
                     else pending++;
                 });
             });
@@ -1139,33 +2674,100 @@
             }
         }
 
-        function sortUsersArray(users, sortBy) {
-            users.sort((a, b) => {
+        function sortUsersArray(items, sortBy, containerId) {
+            const isProviders = isServiceProvidersContainer(containerId);
+            const isFoods = isFoodPlacesContainer(containerId);
+            const isFreelance = isFreelanceProsContainer(containerId);
+            const isCars = isCarRentalsContainer(containerId);
+            const isTraining = isTrainingOffersContainer(containerId);
+            const isJobs = isJobPostsContainer(containerId);
+            const isAds = isClassifiedAdsContainer(containerId);
+            const isServiceLike = (isProviders || isFoods || isFreelance || isCars || isTraining || isJobs || isAds);
+            items.sort((a, b) => {
                 if (sortBy === 'name') {
-                    const nameA = `${a.data.firstName || ''} ${a.data.lastName || ''}`.toLowerCase();
-                    const nameB = `${b.data.firstName || ''} ${b.data.lastName || ''}`.toLowerCase();
+                    const nameA = isServiceLike
+                        ? String(a.data.title || a.data.name || a.data.displayName || '').toLowerCase()
+                        : `${a.data.firstName || ''} ${a.data.lastName || ''}`.toLowerCase();
+                    const nameB = isServiceLike
+                        ? String(b.data.title || b.data.name || b.data.displayName || '').toLowerCase()
+                        : `${b.data.firstName || ''} ${b.data.lastName || ''}`.toLowerCase();
                     return nameA.localeCompare(nameB);
                 } else if (sortBy === 'date') {
+                    if (isServiceLike) {
+                        const msA = (a.data.createdAtMs ?? (a.data.createdAt ? (a.data.createdAt.seconds * 1000) : 0)) || 0;
+                        const msB = (b.data.createdAtMs ?? (b.data.createdAt ? (b.data.createdAt.seconds * 1000) : 0)) || 0;
+                        return msB - msA;
+                    }
                     const dateA = a.data.lastUpdated ? a.data.lastUpdated.seconds : 0;
                     const dateB = b.data.lastUpdated ? b.data.lastUpdated.seconds : 0;
                     return dateB - dateA;
                 } else if (sortBy === 'status') {
-                    return (a.data.isCertified ? 1 : 0) - (b.data.isCertified ? 1 : 0);
+                    const certA = isServiceLike ? (a.data.isCertified === true || a.data.certified === true) : (a.data.isCertified === true);
+                    const certB = isServiceLike ? (b.data.isCertified === true || b.data.certified === true) : (b.data.isCertified === true);
+                    return (certA ? 1 : 0) - (certB ? 1 : 0);
                 }
                 return 0;
             });
         }
 
-        function filterUsersArray(users) {
+        function filterUsersArray(items, containerId) {
+            const isProviders = isServiceProvidersContainer(containerId);
+            const isFoods = isFoodPlacesContainer(containerId);
+            const isFreelance = isFreelanceProsContainer(containerId);
+            const isCars = isCarRentalsContainer(containerId);
+            const isTraining = isTrainingOffersContainer(containerId);
+            const isJobs = isJobPostsContainer(containerId);
+            const isAds = isClassifiedAdsContainer(containerId);
+            const isServiceLike = (isProviders || isFoods || isFreelance || isCars || isTraining || isJobs || isAds);
+            const q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
             const statusFilter = document.getElementById('statusFilter').value;
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
-            return users.filter(({ data: user }) => {
-                if (statusFilter && (statusFilter === 'certified' ? !user.isCertified : user.isCertified)) return false;
-                if (startDate && user.lastUpdated && new Date(user.lastUpdated.seconds * 1000) < new Date(startDate)) return false;
-                if (endDate && user.lastUpdated && new Date(user.lastUpdated.seconds * 1000) > new Date(endDate)) return false;
+
+            const start = startDate ? new Date(startDate).getTime() : null;
+            const end = endDate ? new Date(endDate).getTime() : null;
+
+            return (items || []).filter(({ data }) => {
+                const d = data || {};
+                const certified = isServiceLike ? (d.isCertified === true || d.certified === true) : (d.isCertified === true);
+                if (statusFilter && (statusFilter === 'certified' ? !certified : certified)) return false;
+
+                if (isServiceLike) {
+                    const ms = (d.createdAtMs ?? (d.createdAt ? (d.createdAt.seconds * 1000) : null));
+                    if (start && ms && ms < start) return false;
+                    if (end && ms && ms > end) return false;
+                } else {
+                    const ms = d.lastUpdated ? (d.lastUpdated.seconds * 1000) : null;
+                    if (start && ms && ms < start) return false;
+                    if (end && ms && ms > end) return false;
+                }
+
+                if (q) {
+                    const hay = isServiceLike
+                        ? [
+                            d.title, d.name, d.displayName, d.company, d.location, d.salary, d.price, d.typeKey, d.categoryKey, d.role, d.type, d.category, d.cityLabel, d.city, d.durationLabel, d.priceLabel, d.phone, d.email, d.createdByEmail, d.createdByName,
+                            Array.isArray(d.tags) ? d.tags.join(' ') : ''
+                          ].filter(Boolean).join(' ').toLowerCase()
+                        : [
+                            d.firstName, d.lastName, d.email, d.phone, d.address
+                          ].filter(Boolean).join(' ').toLowerCase();
+                    if (!hay.includes(q)) return false;
+                }
+
                 return true;
             });
+        }
+
+        function filterUsers() {
+            currentPage = 1;
+            const activeTab = document.querySelector('.tabcontent[style*=\"display: block\"]');
+            if (!activeTab) return;
+            const containerId = activeTab.querySelector('.user-grid').id;
+            if (containerId === 'identity-validation-list') {
+                filterIdentityList();
+                return;
+            }
+            renderUsers(containerId);
         }
 
         function toggleSelection(userId) {
@@ -1179,9 +2781,13 @@
         async function bulkCertify() {
             const activeTab = document.querySelector('.tabcontent[style*="display: block"]');
             if (!activeTab) return;
-            const collectionName = activeTab.querySelector('.user-grid').id.replace('-users', '_users');
+            const containerId = activeTab.querySelector('.user-grid').id;
+            const collectionName = collectionNameFromContainerId(containerId);
             for (const userId of selectedUsers) {
-                await updateDoc(doc(db, collectionName, userId), { isCertified: true });
+                const payload = (collectionName === 'service_providers' || collectionName === 'food_places' || collectionName === 'freelance_pros' || collectionName === 'car_rentals' || collectionName === 'training_offers' || collectionName === 'job_posts' || collectionName === 'classified_ads')
+                    ? { isCertified: true, certified: true, certifiedAt: serverTimestamp() }
+                    : { isCertified: true };
+                await updateDoc(doc(db, collectionName, userId), payload);
             }
             selectedUsers.clear();
             updateStats();
@@ -1191,9 +2797,13 @@
         async function bulkUncertify() {
             const activeTab = document.querySelector('.tabcontent[style*="display: block"]');
             if (!activeTab) return;
-            const collectionName = activeTab.querySelector('.user-grid').id.replace('-users', '_users');
+            const containerId = activeTab.querySelector('.user-grid').id;
+            const collectionName = collectionNameFromContainerId(containerId);
             for (const userId of selectedUsers) {
-                await updateDoc(doc(db, collectionName, userId), { isCertified: false });
+                const payload = (collectionName === 'service_providers' || collectionName === 'food_places' || collectionName === 'freelance_pros' || collectionName === 'car_rentals' || collectionName === 'training_offers' || collectionName === 'job_posts' || collectionName === 'classified_ads')
+                    ? { isCertified: false, certified: false, certifiedAt: null }
+                    : { isCertified: false };
+                await updateDoc(doc(db, collectionName, userId), payload);
             }
             selectedUsers.clear();
             updateStats();
@@ -1237,21 +2847,45 @@
             window.print();
         }
 
-        // Add export PDF button
-        document.querySelector('.export-btn').insertAdjacentHTML('afterend', '<button onclick="exportPDF()">Exporter PDF</button>');
+        // Add export buttons (PDF + CSV) and wire with addEventListener
+        (function(){
+            const exportBtn = document.querySelector('.export-btn');
+            if (!exportBtn) return;
+            const pdfBtn = document.createElement('button');
+            pdfBtn.textContent = 'Exporter PDF';
+            pdfBtn.className = 'export-pdf-btn';
+            pdfBtn.addEventListener('click', exportPDF);
+            const csvBtn = document.createElement('button');
+            csvBtn.textContent = 'Exporter CSV';
+            csvBtn.className = 'export-csv-btn';
+            csvBtn.style.marginLeft = '8px';
+            csvBtn.addEventListener('click', exportCSV);
+            exportBtn.insertAdjacentElement('afterend', csvBtn);
+            exportBtn.insertAdjacentElement('afterend', pdfBtn);
+        })();
 
         function openModal(user) {
+            console.debug('openModal user:', user);
             document.getElementById('modal-name').textContent = `${user.firstName || ''} ${user.lastName || ''}`;
             let details = '';
             for (const [key, value] of Object.entries(user)) {
-                if (value) details += `<p><strong>${key}:</strong> ${value}</p>`;
+                let display = '';
+                if (value === null || value === undefined) display = '<em>vide</em>';
+                else if (typeof value === 'object') display = `<pre style="white-space:pre-wrap;max-height:200px;overflow:auto;">${JSON.stringify(value, null, 2)}</pre>`;
+                else display = String(value);
+                details += `<p><strong>${key}:</strong> ${display}</p>`;
             }
             document.getElementById('modal-details').innerHTML = details;
-            document.getElementById('userModal').style.display = 'block';
+            const modal = document.getElementById('userModal');
+            modal.style.display = 'block';
+            setTimeout(() => modal.classList.add('open'), 20);
         }
 
         function closeModal() {
-            document.getElementById('userModal').style.display = 'none';
+            const modal = document.getElementById('userModal');
+            if (!modal) return;
+            modal.classList.remove('open');
+            setTimeout(() => { modal.style.display = 'none'; }, 240);
         }
 
         function openTab(evt, tabName) {
@@ -1266,6 +2900,7 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
             currentPage = 1;
+            selectedUsers.clear();
 
             // Load data when tab is opened
             if (tabName === 'Classic') {
@@ -1274,6 +2909,22 @@
                 displayUsers('pro_users', 'pro-users');
             } else if (tabName === 'Enterprise') {
                 displayUsers('enterprise_users', 'enterprise-users');
+            } else if (tabName === 'Validation') {
+                loadIdentityPending();
+            } else if (tabName === 'Services') {
+                displayUsers('service_providers', 'service-providers');
+            } else if (tabName === 'Food') {
+                displayUsers('food_places', 'food-places');
+            } else if (tabName === 'Freelance') {
+                displayUsers('freelance_pros', 'freelance-pros');
+            } else if (tabName === 'Cars') {
+                displayUsers('car_rentals', 'car-rentals');
+            } else if (tabName === 'Training') {
+                displayUsers('training_offers', 'training-offers');
+            } else if (tabName === 'Jobs') {
+                displayUsers('job_posts', 'job-posts');
+            } else if (tabName === 'Ads') {
+                displayUsers('classified_ads', 'classified-ads');
             }
         }
 
@@ -1301,10 +2952,54 @@
         document.querySelector('.export-btn').addEventListener('click', exportData);
         document.querySelector('button[data-action="refresh"]').addEventListener('click', refreshData);
         document.querySelector('button[data-action="settings"]').addEventListener('click', openSettings);
-        document.getElementById('searchInput').addEventListener('input', filterUsers);
+        document.getElementById('searchInput').addEventListener('input', debounce(filterUsers, 300));
         document.getElementById('statusFilter').addEventListener('change', filterUsers);
         document.getElementById('startDate').addEventListener('change', filterUsers);
         document.getElementById('endDate').addEventListener('change', filterUsers);
+        document.getElementById('identitySearchBtn')?.addEventListener('click', filterIdentityList);
+        document.getElementById('identityRefreshBtn')?.addEventListener('click', loadIdentityPending);
+        document.getElementById('identitySearchInput')?.addEventListener('input', debounce(filterIdentityList, 300));
+
+        // Horizontal drag scroll for tabs (mouse + touch)
+        (function enableTabDrag() {
+            const tab = document.querySelector('.tab');
+            if (!tab) return;
+            let isDown = false;
+            let startX = 0;
+            let scrollLeft = 0;
+
+            const start = (pageX) => {
+                isDown = true;
+                startX = pageX - tab.offsetLeft;
+                scrollLeft = tab.scrollLeft;
+                tab.classList.add('dragging');
+            };
+            const end = () => {
+                isDown = false;
+                tab.classList.remove('dragging');
+            };
+            const move = (pageX) => {
+                if (!isDown) return;
+                const x = pageX - tab.offsetLeft;
+                const walk = (x - startX) * 1.2;
+                tab.scrollLeft = scrollLeft - walk;
+            };
+
+            tab.addEventListener('mousedown', (e) => start(e.pageX));
+            tab.addEventListener('mouseleave', end);
+            tab.addEventListener('mouseup', end);
+            tab.addEventListener('mousemove', (e) => move(e.pageX));
+
+            tab.addEventListener('touchstart', (e) => {
+                if (e.touches.length !== 1) return;
+                start(e.touches[0].pageX);
+            }, { passive: true });
+            tab.addEventListener('touchend', end);
+            tab.addEventListener('touchmove', (e) => {
+                if (e.touches.length !== 1) return;
+                move(e.touches[0].pageX);
+            }, { passive: true });
+        })();
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
